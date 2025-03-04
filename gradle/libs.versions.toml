@@ -15,6 +15,7 @@ composeBom = "2025.01.01"
 appcompat = "1.7.0"
 hilt = "2.55"
 material = "1.12.0"
+coilComposeVersion = "2.5.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +43,9 @@ ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktorS
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+# Coil
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
