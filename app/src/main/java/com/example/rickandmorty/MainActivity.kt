@@ -11,7 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.network.KtorClient
+import com.example.rickandmorty.components.navigation.CharacterDetails
 import com.example.rickandmorty.screens.CharacterDetailsScreen
 import com.example.rickandmorty.ui.theme.RickAndMortyTheme
 import com.example.rickandmorty.ui.theme.RickPrimary
@@ -23,17 +27,29 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
+            val navController = rememberNavController()
+
+
             RickAndMortyTheme {
                 // A surface container using the 'background' color from the theme
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     containerColor = RickPrimary
                 ) { innerPadding ->
-                    CharacterDetailsScreen(
-                        ktorClient = ktorClient,
-                        characterId = 1,
-                        modifier = Modifier.padding(innerPadding)
-                    )
+
+                    NavHost(navController = navController, startDestination = CharacterDetails(characterId = 1)) {
+                        composable<CharacterDetails> { backStackEntry ->
+                            val args = backStackEntry.arguments?.getSerializable<CharacterDetails>()
+                            CharacterDetailsScreen(
+                                ktorClient = ktorClient,
+                                characterId = args?.characterId ?: 1,  // Default value 1
+                                modifier = Modifier.padding(innerPadding)
+                            )
+                        }
+
+                    }
+
                 }
             }
         }
