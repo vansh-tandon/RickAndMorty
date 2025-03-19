@@ -1,8 +1,10 @@
 [versions]
-agp = "8.8.0"
+agp = "8.8.2"
 kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
+kotlinxSerializationCore = "1.5.0"
+kotlinxSerializationJson = "1.5.0"
 ktor = "3.0.3"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -10,12 +12,16 @@ ktorServerCore = "3.0.3"
 ktorServerNetty = "3.0.3"
 ktorVersion = "3.0.3"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.10.0"
-composeBom = "2025.01.01"
+activityCompose = "1.10.1"
+composeBom = "2025.02.00"
 appcompat = "1.7.0"
 hilt = "2.55"
 material = "1.12.0"
-coilComposeVersion = "2.5.0"
+coilComposeVersion = "2.7.0"
+navVersion = "2.8.8"
+hiltNavigationComposeVersion = "1.2.0"
+ksp = "2.1.0-1.0.29"
+kotlinxSerialization = "2.0.20"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +39,8 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorVersion" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorVersion" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -41,6 +49,8 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktorServerCore" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktorServerNetty" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationComposeVersion" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navVersion" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 # Coil
@@ -52,4 +62,6 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxSerialization" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 

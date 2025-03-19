@@ -4,7 +4,6 @@ package com.example.network.dto
 import com.example.network.domain.Character
 import com.example.network.domain.CharacterGender
 import com.example.network.domain.CharacterStatus
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
