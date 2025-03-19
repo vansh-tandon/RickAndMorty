@@ -14,7 +14,7 @@ sealed class Screen(
         route = "character_episode/{characterId}", navArguments = listOf(
             navArgument(
                 "characterId"
-            ) { type = NavType.StringType })
+            ) { type = NavType.IntType })
     ) {
         fun createRoute(characterId: Int) = "character_episode/${characterId}"
     }
