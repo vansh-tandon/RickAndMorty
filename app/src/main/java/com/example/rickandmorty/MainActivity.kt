@@ -20,7 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.network.KtorClient
 import com.example.rickandmorty.navigation.Screen
 import com.example.rickandmorty.screens.CharacterDetailsScreen
-import com.example.rickandmorty.ui.theme.RickAction
+import com.example.rickandmorty.screens.CharacterEpisodeScreen
 import com.example.rickandmorty.ui.theme.RickAndMortyTheme
 import com.example.rickandmorty.ui.theme.RickPrimary
 
@@ -43,16 +43,16 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.CharacterDetails.route) {
                             CharacterDetailsScreen(
                                 ktorClient = ktorClient,
-                                characterId = 1,
+                                characterId = 116,
                                 modifier = Modifier.padding(innerPadding)
                             ){
-                                navController.navigate(Screen.CharacterEpisode.createRoute(124))
+                                navController.navigate(Screen.CharacterEpisode.createRoute(116))
                             }
                         }
                         composable(route = Screen.CharacterEpisode.route, arguments = Screen.CharacterEpisode.navArguments){
                                 backStackEntry ->
                             val characterId: Int = backStackEntry.arguments?.getInt("characterId") ?: -1
-                            CharacterEpisodeScreen(characterId = characterId)
+                            CharacterEpisodeScreen(characterId = characterId, ktorClient = ktorClient)
                         }
                     }
                 }
@@ -61,12 +61,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun CharacterEpisodeScreen(characterId: Int) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "Character episode screen: $characterId", fontSize = 28.sp, color = RickAction)
-    }
-}
+//@Composable
+//fun CharacterEpisodeScreen(characterId: Int) {
+//    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//        Text(text = "Character episode screen: $characterId", fontSize = 28.sp, color = RickAction)
+//    }
+//}
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {

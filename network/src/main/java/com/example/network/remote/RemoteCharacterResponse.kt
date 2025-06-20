@@ -1,4 +1,4 @@
-package com.example.network.dto
+package com.example.network.remote
 
 
 import com.example.network.domain.Character

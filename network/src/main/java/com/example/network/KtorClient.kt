@@ -2,8 +2,11 @@ package com.example.network
 
 import com.example.network.api.ApiConstants.BASE_URL
 import com.example.network.domain.Character
-import com.example.network.dto.RemoteCharacterResponse
-import com.example.network.dto.toDomainCharacter
+import com.example.network.domain.Episode
+import com.example.network.remote.RemoteCharacterResponse
+import com.example.network.remote.RemoteEpisode
+import com.example.network.remote.toDomainCharacter
+import com.example.network.remote.toDomainEpisode
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -47,6 +50,29 @@ class KtorClient {
         }
     }
 
+    suspend fun getEpisode(episodeId: Int): ApiOperation<Episode> {
+        return safeApiCall {
+            client.get("episode/$episodeId")
+                .body<RemoteEpisode>()
+                .toDomainEpisode()
+        }
+    }
+
+    suspend fun getEpisodes(episodeIds: List<Int>): ApiOperation<List<Episode>> {
+        return if (episodeIds.size == 1) {
+            getEpisode(episodeIds[0]).mapSuccess {
+                listOf(it)
+            }
+        } else {
+            val idsCommaSeparated = episodeIds.joinToString(separator = ",")
+            safeApiCall {
+                client.get("episode/$idsCommaSeparated")
+                    .body<List<RemoteEpisode>>()
+                    .map { it.toDomainEpisode() }
+            }
+        }
+    }
+
 
     private inline fun <T> safeApiCall(apiCall: () -> T): ApiOperation<T> {
         return try {
@@ -60,6 +86,13 @@ class KtorClient {
 sealed interface ApiOperation<T> {
     data class Success<T>(val data: T): ApiOperation<T>
     data class Failure<T>(val exception: Exception): ApiOperation<T>
+
+    fun <R> mapSuccess(transform: (T) -> R): ApiOperation<R> {
+        return when (this) {
+            is Success -> Success(transform(data))
+            is Failure -> Failure(exception)
+        }
+    }
 
     fun onSuccess(block: (T) -> Unit): ApiOperation<T> {
         if (this is Success) block(data)

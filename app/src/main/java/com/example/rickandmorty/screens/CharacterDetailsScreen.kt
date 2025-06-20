@@ -35,7 +35,6 @@ import com.example.rickandmorty.components.character.CharacterDetailsNamePlateCo
 import com.example.rickandmorty.components.common.DataPoint
 import com.example.rickandmorty.components.common.DataPointComponent
 import com.example.rickandmorty.ui.theme.RickAction
-import kotlinx.coroutines.delay
 
 @Composable
 fun CharacterDetailsScreen(
