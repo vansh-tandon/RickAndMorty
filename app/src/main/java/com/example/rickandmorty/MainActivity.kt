@@ -23,10 +23,15 @@ import com.example.rickandmorty.screens.CharacterDetailsScreen
 import com.example.rickandmorty.screens.CharacterEpisodeScreen
 import com.example.rickandmorty.ui.theme.RickAndMortyTheme
 import com.example.rickandmorty.ui.theme.RickPrimary
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val ktorClient = KtorClient()
+    @Inject
+    lateinit var ktorClient: KtorClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,20 +44,27 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     containerColor = RickPrimary
                 ) { innerPadding ->
-                    NavHost(navController = navController, startDestination = Screen.CharacterDetails.route) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.CharacterDetails.route
+                    ) {
                         composable(route = Screen.CharacterDetails.route) {
                             CharacterDetailsScreen(
-                                ktorClient = ktorClient,
                                 characterId = 116,
-                                modifier = Modifier.padding(innerPadding)
-                            ){
+                                ) {
                                 navController.navigate(Screen.CharacterEpisode.createRoute(116))
                             }
                         }
-                        composable(route = Screen.CharacterEpisode.route, arguments = Screen.CharacterEpisode.navArguments){
-                                backStackEntry ->
-                            val characterId: Int = backStackEntry.arguments?.getInt("characterId") ?: -1
-                            CharacterEpisodeScreen(characterId = characterId, ktorClient = ktorClient)
+                        composable(
+                            route = Screen.CharacterEpisode.route,
+                            arguments = Screen.CharacterEpisode.navArguments
+                        ) { backStackEntry ->
+                            val characterId: Int =
+                                backStackEntry.arguments?.getInt("characterId") ?: -1
+                            CharacterEpisodeScreen(
+                                characterId = characterId,
+                                ktorClient = ktorClient
+                            )
                         }
                     }
                 }
