@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun CharacterEpisodeScreen(characterId: Int, ktorClient: KtorClient) {
+fun CharacterEpisodeScreen(characterId: Int, ktorClient: KtorClient, onBackClicked: () -> Unit) {
     var characterState by remember { mutableStateOf<Character?>(null) }
     var episodesState by remember { mutableStateOf<List<Episode>>(emptyList()) }
 
