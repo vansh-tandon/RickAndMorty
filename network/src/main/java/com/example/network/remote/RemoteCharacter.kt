@@ -1,13 +1,12 @@
 package com.example.network.remote
 
-
-import com.example.network.domain.Character
 import com.example.network.domain.CharacterGender
 import com.example.network.domain.CharacterStatus
 import kotlinx.serialization.Serializable
+import com.example.network.domain.Character
 
 @Serializable
-data class RemoteCharacterResponse(
+data class RemoteCharacter(
     val created: String,
     val episode: List<String>,
     val gender: String,
@@ -34,14 +33,14 @@ data class RemoteCharacterResponse(
     )
 }
 
-fun RemoteCharacterResponse.toDomainCharacter(): Character {
-    val characterGender = when (gender?.lowercase()) {
+fun RemoteCharacter.toDomainCharacter(): com.example.network.domain.Character {
+    val characterGender = when (gender.lowercase()) {
         "female" -> CharacterGender.Female
         "male" -> CharacterGender.Male
         "genderless" -> CharacterGender.Genderless
         else -> CharacterGender.Unknown
     }
-    val characterStatus = when (status?.lowercase()) {
+    val characterStatus = when (status.lowercase()) {
         "alive" -> CharacterStatus.Alive
         "dead" -> CharacterStatus.Dead
         else -> CharacterStatus.Unknown

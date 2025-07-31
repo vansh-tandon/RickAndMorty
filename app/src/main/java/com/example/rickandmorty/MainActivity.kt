@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import com.example.network.KtorClient
 import com.example.rickandmorty.navigation.Screen
 import com.example.rickandmorty.screens.CharacterDetailsScreen
 import com.example.rickandmorty.screens.CharacterEpisodeScreen
+import com.example.rickandmorty.screens.HomeScreen
 import com.example.rickandmorty.ui.theme.RickAndMortyTheme
 import com.example.rickandmorty.ui.theme.RickPrimary
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,14 +42,16 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             RickAndMortyTheme {
-                Scaffold(
+                Surface(
                     modifier = Modifier.fillMaxSize(),
-                    containerColor = RickPrimary
-                ) { innerPadding ->
-                    NavHost(
-                        navController = navController,
-                        startDestination = Screen.CharacterDetails.route
-                    ) {
+                    color = RickPrimary
+                ) {
+                    NavHost(navController = navController, startDestination = "home_screen") {
+                        composable(route = "home_screen") {
+                            HomeScreen(onCharacterSelected = {
+                                // todo navigate
+                            })
+                        }
                         composable(route = Screen.CharacterDetails.route) {
                             CharacterDetailsScreen(
                                 characterId = 116,

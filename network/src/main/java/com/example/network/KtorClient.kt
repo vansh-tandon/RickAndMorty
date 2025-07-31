@@ -2,10 +2,13 @@ package com.example.network
 
 import com.example.network.api.ApiConstants.BASE_URL
 import com.example.network.domain.Character
+import com.example.network.domain.CharacterPage
 import com.example.network.domain.Episode
-import com.example.network.remote.RemoteCharacterResponse
+import com.example.network.remote.RemoteCharacter
+import com.example.network.remote.RemoteCharacterPage
 import com.example.network.remote.RemoteEpisode
 import com.example.network.remote.toDomainCharacter
+import com.example.network.remote.toDomainCharacterPage
 import com.example.network.remote.toDomainEpisode
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -44,9 +47,17 @@ class KtorClient {
         characterCache[id]?.let { return ApiOperation.Success(it) }
         return safeApiCall {
             client.get("character/$id")
-                .body<RemoteCharacterResponse>()
+                .body<RemoteCharacter>()
                 .toDomainCharacter()
                 .also { characterCache[id] = it }
+        }
+    }
+
+    suspend fun getCharacterByPage(pageNumber: Int): ApiOperation<CharacterPage> {
+        return safeApiCall {
+            client.get("character/?page=$pageNumber")
+                .body<RemoteCharacterPage>()
+                .toDomainCharacterPage()
         }
     }
 
